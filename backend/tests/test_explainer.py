@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-from notes_summarizer.utils.explainer import explainCode
+from code_summarizer.utils.explainer import explainCode
 from openai.error import AuthenticationError, RateLimitError
 from pytest import raises
 from unittest.mock import patch

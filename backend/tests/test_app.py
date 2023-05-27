@@ -1,7 +1,6 @@
 import pytest
 from flask import json
-from notes_summarizer.app.routes import app
-from unittest.mock import patch, MagicMock
+from code_summarizer.app.routes import app
 
 
 @pytest.fixture
