@@ -3,16 +3,21 @@ name = "notes-summarizer-backend"
 version = "0.1.0"
 description = "Backend for react front end used to summarize notes"
 authors = ["Zak Raicik <raicik.zach@Gmail.com>"]
+packages = [
+    { include = "notes_summarizer" }, # Needed because tool.poetry name is different than the folder name
+]
 
 [tool.poetry.dependencies]
 python = "^3.9"
 Flask = "^2.3.2"
-black = "^23.3.0"
-python-dotenv = "^1.0.0"
 openai = "^0.27.7"
-pytest = "^7.3.1"
+
 
 [tool.poetry.dev-dependencies]
+pytest = "^7.3.1"
+python-dotenv = "^1.0.0"
+black = "^23.3.0"
+
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
