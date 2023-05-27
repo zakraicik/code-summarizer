@@ -15,10 +15,15 @@ app = Flask(__name__)
 @app.route("/summarize", methods=["POST"])
 def summarize():
     api_key = request.headers.get("X-API-KEY")
+
     if not api_key:
         return jsonify(error="API key missing"), 400
 
-    data = request.get_json()
+    try:
+        data = request.get_json()
+    except:
+        data = None
+
     if not data:
         return jsonify(error="Missing JSON data"), 400
 
