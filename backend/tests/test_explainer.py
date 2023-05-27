@@ -12,12 +12,15 @@ OPEN_API_KEY = os.getenv("OPEN_API_KEY")
 
 
 def test_explainCode_authentication_error():
-    # Test authentication error scenario
     api_key = "invalid_api_key"
     code = "print('hello world)"
 
-    with raises(AuthenticationError):
-        response = explainCode(api_key, code)
+    with patch(
+        "openai.ChatCompletion.create",
+        side_effect=AuthenticationError("AuthenticationError: <empty message>"),
+    ):
+        with raises(AuthenticationError):
+            response = explainCode(api_key, code)
 
 
 def test_explainCode_rate_limit_error():
@@ -36,6 +39,9 @@ def test_explainCode_rate_limit_error():
 def test_explainCode_valid():
     code = "print('hello world')"
 
-    response = explainCode(OPEN_API_KEY, code)
+    with patch("openai.ChatCompletion.create") as mock_create:
+        mock_create.return_value = {"some": "response"}
 
-    assert response is not None
+        response = explainCode(OPEN_API_KEY, code)
+
+    assert response == {"some": "response"}
