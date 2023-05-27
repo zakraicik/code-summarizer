@@ -1,6 +1,7 @@
 import pytest
 from flask import json
 from notes_summarizer.app.routes import app
+from unittest.mock import patch, MagicMock
 
 
 @pytest.fixture
@@ -13,26 +14,26 @@ def client():
 def test_no_api_key(client):
     response = client.post("/summarize", headers={"Content-Type": "application/json"})
     assert response.status_code == 400
-    data = json.loads(response.data)
+    data = response.get_json()
     assert data["error"] == "API key missing"
 
 
-# def test_no_code(client):
-#     response = client.post(
-#         "/summarize",
-#         headers={"X-API-KEY": "valid_api_key", "Content-Type": "application/json"},
-#     )
-#     assert response.status_code == 400
-#     data = json.loads(response.data)
-#     assert data["error"] == "Missing JSON data"
+def test_missing_data(client):
+    response = client.post(
+        "/summarize",
+        headers={"X-API-KEY": "valid_api_key", "Content-Type": "application/json"},
+    )
+    assert response.status_code == 400
+    data = response.get_json()
+    assert data["error"] == "Missing JSON data"
 
 
-# def test_invalid_code(client):
-#     response = client.post(
-#         "/summarize",
-#         headers={"X-API-KEY": "valid_api_key", "Content-Type": "application/json"},
-#         data=json.dumps({"code": "invalid_code"}),
-#     )
-#     assert response.status_code == 500
-#     data = json.loads(response.data)
-#     assert data["error"] == "API request failed"
+def test_missing_code(client):
+    response = client.post(
+        "/summarize",
+        headers={"X-API-KEY": "valid_api_key", "Content-Type": "application/json"},
+        data=json.dumps({"not code": "random"}),
+    )
+    assert response.status_code == 400
+    data = response.get_json()
+    assert data["error"] == "Code missing in request"
