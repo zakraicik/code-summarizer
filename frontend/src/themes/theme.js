@@ -28,11 +28,3 @@ const Theme = createTheme({
 });
 
 export default Theme;
-
-// backgroundImage: `url("/background.jpg")`,
-//           backgroundRepeat: 'no-repeat',
-//           backgroundSize: 'cover',
-          
-
-          
-//           backgroundAttachment: 'fixed',
