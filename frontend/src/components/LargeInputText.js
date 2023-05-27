@@ -9,6 +9,7 @@ export default function LargeInputText() {
             width: "500px",
             backgroundColor: "rgba(255, 255, 255, 0.10)",
 
+
         }}>
             <TextField
                 id="outlined-multiline-static"
@@ -18,7 +19,11 @@ export default function LargeInputText() {
                 defaultValue="Default Value"
                 variant="outlined"
                 fullWidth
-                sx={{ flex: 1, }}
+                sx={{
+                    flex: 1,
+
+                }}
+
             />
         </Box>
     );

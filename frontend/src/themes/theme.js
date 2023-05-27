@@ -2,7 +2,11 @@ import { createTheme } from "@mui/material/styles";
 
 
 const Theme = createTheme({
-
+    palette: {
+        primary: {
+            main: "#fff"
+        },
+    },
     components: {
         MuiCssBaseline: {
             styleOverrides: {

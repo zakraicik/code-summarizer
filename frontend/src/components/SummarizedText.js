@@ -8,13 +8,13 @@ function SummarizedText(props) {
             width: "500px",
             backgroundColor: "rgba(255, 255, 255, 0.10)",
 
-
         }}>
             <TextField
                 label="Summary"
                 multiline
                 rows={10}
                 fullWidth
+                focused
                 variant="outlined"
                 value={props.text}
                 InputProps={{
