@@ -1,7 +1,7 @@
 import { TextField } from '@mui/material';
 import { Box } from '@mui/material';
 
-function SummarizedText(props) {
+function SummarizedText({ value }) {
     return (
         <Box sx={{
             display: 'flex',
@@ -16,7 +16,7 @@ function SummarizedText(props) {
                 fullWidth
                 focused
                 variant="outlined"
-                value={props.text}
+                value={value}
                 InputProps={{
                     readOnly: true,
                 }}

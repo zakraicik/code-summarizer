@@ -7,6 +7,7 @@ const ShimmerButton = styled(Button)(({ theme, disabled }) => ({
     backgroundColor: disabled
         ? theme.palette.primary.disabled
         : theme.palette.primary,
+    color: "#fff",
     opacity: disabled ? 0.5 : 1,
     cursor: disabled ? "not-allowed" : "pointer",
     "&:after": {

@@ -1,15 +1,11 @@
 from flask import Flask, request, jsonify
-import os
-from dotenv import load_dotenv
+from flask_cors import CORS
 from code_summarizer.utils.explainer import explainCode
 
 
-load_dotenv()
-
-
-OPEN_API_KEY = os.getenv("OPEN_API_KEY")
-
 app = Flask(__name__)
+# CORS(app, resources={r"/*": {"origins": "*"}})
+CORS(app, resources={r"/summarize": {"origins": "http://localhost:3000"}})
 
 
 @app.route("/summarize", methods=["POST"])
@@ -36,3 +32,7 @@ def summarize():
         return jsonify(error="API request failed"), 500
 
     return jsonify(summary=response)
+
+
+if __name__ == "__main__":
+    app.run(debug=True)

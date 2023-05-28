@@ -1,6 +1,6 @@
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import SummarizeScreen from './screens/SummarizeScreen'
-import Theme from "./themes/theme";
+import Theme from "./styles/theme";
 import BackgroundImage from "./components/BackgroundImage";
 import { Box } from "@mui/material";
 
