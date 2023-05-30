@@ -1,9 +1,12 @@
-import Button from "@mui/material/Button";
+import { Button } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 const ShimmerButton = styled(Button)(({ theme }) => ({
     position: "relative",
     overflow: "hidden",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
     backgroundColor: theme.palette.primary.main,
     color: theme.palette.primary.contrastText,
     boxShadow: "0px 0px 20px 5px rgba(51, 25, 79, .30)",

@@ -4,10 +4,14 @@ import SummarizedText from "../components/SummarizedText";
 import { Box, Typography } from "@mui/material";
 import ShimmerButton from "../components/ShimmerButton";
 import VerticalLinearStepper from "../components/VerticalLinearStepper";
+import { CircularProgress } from "@mui/material"
 
 function SummarizeScreen() {
-    const [InputText, setInputText] = useState("Code Here");
-    const [SummaraizedText, setSummarizedText] = useState("Summary Displays Here");
+    const [InputText, setInputText] = useState("print(Hello, World!)");
+    const [SummaraizedText, setSummarizedText] = useState(
+        "In this code, `print()` is a built-in function in Python used to display output on the screen. The text written inside the parentheses is the message that will be displayed on the screen. In this case, the message is 'Hello, World!'. So, when this code is executed, it will display 'Hello, World!' on the screen."
+    );
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleInputChange = (event) => {
         setInputText(event.target.value);
@@ -15,6 +19,8 @@ function SummarizeScreen() {
 
     const postData = async (url = "", data = {}) => {
         let apiKey = process.env.REACT_APP_OPENAI_API_KEY;
+
+        setIsLoading(true);
 
         const response = await fetch(url, {
             method: "POST",
@@ -25,9 +31,11 @@ function SummarizeScreen() {
             body: JSON.stringify(data),
         });
 
+
         const jsonResponse = await response.json();
         const content = jsonResponse.summary.choices[0].message.content;
-        return { summary: content }; // Return an object with a summary key
+        setIsLoading(false);
+        return { summary: content };
     };
 
     const handleClick = async () => {
@@ -37,7 +45,7 @@ function SummarizeScreen() {
             if (data.error) {
                 console.error(`An error occurred: ${data.error}`);
             } else if (data.summary) {
-                setSummarizedText(data.summary); // Set summarizedText to data.summary
+                setSummarizedText(data.summary);
             } else {
                 console.error("Unexpected response from the server");
             }
@@ -59,7 +67,8 @@ function SummarizeScreen() {
                 <Box position="relative" mb={2}>
                     <LargeInputText value={InputText} onChange={handleInputChange} />
                     <Box position="absolute" bottom={10} right={10}>
-                        <ShimmerButton onClick={handleClick} >
+                        <ShimmerButton onClick={handleClick} disabled={isLoading}>
+                            {isLoading && <CircularProgress color="inherit" size={24} />}
                             <Typography>Summarize</Typography>
                         </ShimmerButton>
                     </Box>
