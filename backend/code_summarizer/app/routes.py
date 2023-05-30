@@ -1,14 +1,18 @@
 from flask import Flask, request, jsonify
-from flask_cors import CORS
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
+from flask_cors import CORS, cross_origin
 from code_summarizer.utils.explainer import explainCode
 
-
 app = Flask(__name__)
-# CORS(app, resources={r"/*": {"origins": "*"}})
-CORS(app, resources={r"/summarize": {"origins": "http://localhost:3000"}})
+limiter = Limiter(app, key_func=get_remote_address)
+cors = CORS(app, resources={r"/*": {"origins": "*"}})
+app.config["CORS_HEADERS"] = "Content-Type"
 
 
 @app.route("/summarize", methods=["POST"])
+@cross_origin()
+@limiter.limit("10/minute")  # adjust the rate limit to fit your needs
 def summarize():
     api_key = request.headers.get("X-API-KEY")
 
@@ -35,4 +39,4 @@ def summarize():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
